@@ -1,25 +1,111 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Claim from './Claim';
+import WorkSheet from './WorkSheet';
+import DownloadDocument from './DownloadDocument'; // Импортируем компонент для скачивания
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      const [buyerName, setBuyerName] = useState(""); 
+      const [taxNum, setTaxNum] = useState("");
+      const [contractData, setContractData] = useState("");
+      const [currentDate, setCurrentDate] = useState(() => {
+        const today = new Date();
+        return today.toISOString().split('T')[0]; // Формат YYYY-MM-DD
+      });
+
+      const [formType, setFormType] = useState("2020");
+      const [term, setTerm] = useState("0");
+      const [penaltyRate, setPenaltyRate] = useState("0,15%");
+      const [increaseSumStatus, setIncreaseSumStatus] = useState("checked");
+      const [totalDebt, setTotalDebt] = useState(0);
+      const [totalPenaltySum, setTotalPenaltySum] = useState(0);
+      const [documents, setDocuments] = useState([]);
+      const [selectedDocuments, setSelectedDocuments] = useState([]);
+      
+      const handleDocumentChange = (newDocuments) => {
+        setDocuments(newDocuments);
+    };
+
+// Обработчик для обновления списка отмеченных документов
+    const handleSelectedDocumentsChange = (newSelectedDocuments) => {
+      setSelectedDocuments(newSelectedDocuments);  // Обновляем состояние с документами
+  };
+
+    const handlePenaltyRateChange = (newRate) => {
+      setPenaltyRate(newRate); // Обновляем значение неустойки
+    };
+
+    const [totalIncreaseSum, setTotalIncreaseSum] = useState(0); // Для хранения суммы 10%
+
+    const handleTotalIncreaseSumChange = (sum) => {
+        setTotalIncreaseSum(sum); // Обновляем состояние для суммы 10%
+    };
+
+    const handleTotalPenaltySumChange = (sum) => {
+      setTotalPenaltySum(sum);
+    };
+
+    const claimProps = {
+      buyerName,
+      taxNum,
+      contractData,
+      currentDate,
+      formType,
+      increaseSumStatus,
+      term,
+      totalDebt,
+      documents,
+      selectedDocuments,
+      penaltyRate,
+      totalIncreaseSum,
+      totalPenaltySum,
+  };
+
+  return (<div className="App">
+    
+<div className='container-data'> 
+      <WorkSheet 
+            onBuyerChange={setBuyerName}
+            onTaxNumberChange={setTaxNum}
+            onContractChange={setContractData}
+            onDateChange={setCurrentDate}
+            onFormTypeChange={setFormType}
+            onPaymentTermChange={setTerm}
+            onPenaltyRateChange={handlePenaltyRateChange} 
+            onIsIncreaseSumChange={setIncreaseSumStatus}
+            onDocumentsChange={handleDocumentChange}
+            onSelectedDocumentsChange={handleSelectedDocumentsChange}
+            onTotalDebtChange={setTotalDebt}
+            onTotalIncreaseSumChange={handleTotalIncreaseSumChange}
+            onTotalPenaltySumChange={handleTotalPenaltySumChange}
+            />
+
+                 <div className="download-button">
+            <DownloadDocument claimProps={claimProps} />
+            </div>
+</div>
+
+<div className='container-claim'>
+      <Claim 
+            buyerName={buyerName}
+            taxNum={taxNum}
+            contractData={contractData} 
+            date={currentDate}
+            formType={formType}
+            term={term}
+            penaltyRate={penaltyRate} // Передаем новое значение в Claim
+            increaseSumStatus={increaseSumStatus}
+            documents={documents}
+            selectedDocuments={selectedDocuments}
+            totalDebt={totalDebt}
+            totalIncreaseSum={totalIncreaseSum} 
+            totalPenaltySum={totalPenaltySum}
+      />
+</div>
+
     </div>
-  );
+    );
 }
 
 export default App;
