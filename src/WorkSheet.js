@@ -11,8 +11,6 @@ const WorkSheet = ({ onBuyerChange, onContractChange, onDateChange, onFormTypeCh
     const [penaltyRate, setPenaltyRate] = useState("0,15%");
     const [isIncreaseSum, setIsIncreaseSum] = useState(true);
 
-    // const [currentDate, setCurrentDate] = useState(Date);
-
     const [currentDate, setCurrentDate] = useState(() => {
         const today = new Date();
         return today.toISOString().split("T")[0]; // Форматируем как 'YYYY-MM-DD'
@@ -26,10 +24,7 @@ const WorkSheet = ({ onBuyerChange, onContractChange, onDateChange, onFormTypeCh
         recalculatePenaltySum();   // Пересчитываем все значения при изменении текущей даты
     };
 
-
-    const [checkedRows, setCheckedRows] = useState({});
     const [rows, setRows] = useState([{ id: Date.now(), sum: "", document: "", shipmentDate: "", penaltyDays: "", paymentDate: "", checked: false }]);
-    
     
     const handleBuyerChange = (e) => {
         setBuyer(e.target.value);
