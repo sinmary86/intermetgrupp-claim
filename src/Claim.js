@@ -57,7 +57,9 @@ const Claim = ({ buyerName, taxNum, buyerAddress, contractData, date, formType, 
     <table className="container-table">
         <tr>
             <td className="left-indent"> Исх. № б/н от {formatDate(date)} г.</td>
-            <td className="align-right">{buyerName} (ИНН {taxNum})</td>
+            <td className="align-right">{buyerName} (ИНН {taxNum})
+                <br/>Адрес: {buyerAddress}
+            </td>
         </tr>
     </table>
 </div>
