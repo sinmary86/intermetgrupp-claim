@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { formatDate, formatNumberWithSpaces } from './Utils';
 
-const WorkSheet = ({ onBuyerChange, onContractChange, onDateChange, onFormTypeChange, onIsIncreaseSumChange, onPaymentTermChange, onTotalDebtChange, onTotalIncreaseSumChange, onDocumentsChange, onSelectedDocumentsChange, onPenaltyRateChange, onTaxNumberChange, onTotalPenaltySumChange }) => {
+const WorkSheet = ({ onBuyerChange, onAddressChange, onContractChange, onDateChange, onFormTypeChange, onIsIncreaseSumChange, onPaymentTermChange, onTotalDebtChange, onTotalIncreaseSumChange, onDocumentsChange, onSelectedDocumentsChange, onPenaltyRateChange, onTaxNumberChange, onTotalPenaltySumChange }) => {
 
     const [buyer, setBuyer] = useState(""); 
     const [taxNumber, setTaxNumber] = useState("");
+    const [address, setAddress] = useState(""); 
     const [contract, setContract] = useState(""); 
     const [formType, setFormType] = useState("2020");
     const [paymentTerm, setPaymentTerm] = useState("");
@@ -34,6 +35,11 @@ const WorkSheet = ({ onBuyerChange, onContractChange, onDateChange, onFormTypeCh
     const handleTaxNumberChange = (e) => {
         setTaxNumber(e.target.value);
         onTaxNumberChange(e.target.value);
+    };
+
+    const handleAddressChange = (e) => {
+        setAddress(e.target.value);
+        onAddressChange(e.target.value);
     };
 
     const handleContractChange = (e) => {
@@ -254,6 +260,16 @@ const updateDocuments = (updatedRows) => {
            placeholder="ИНН Покупателя"
            value={taxNumber}
            onChange={handleTaxNumberChange}
+           />
+        </div> 
+
+        <div className='line'>
+           <h3>Адрес:</h3>
+           <input 
+           type="text" 
+           placeholder="адрес Покупателя"
+           value={address}
+           onChange={handleAddressChange}
            />
         </div> 
 

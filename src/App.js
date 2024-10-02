@@ -8,6 +8,7 @@ function App() {
 
       const [buyerName, setBuyerName] = useState(""); 
       const [taxNum, setTaxNum] = useState("");
+      const [buyerAddress, setBuyerAddress] = useState("");
       const [contractData, setContractData] = useState("");
       const [currentDate, setCurrentDate] = useState(() => {
         const today = new Date();
@@ -49,6 +50,7 @@ function App() {
     const claimProps = {
       buyerName,
       taxNum,
+      buyerAddress,
       contractData,
       currentDate,
       formType,
@@ -67,6 +69,7 @@ function App() {
 <div className='container-data'> 
       <WorkSheet 
             onBuyerChange={setBuyerName}
+            onAddressChange={setBuyerAddress}
             onTaxNumberChange={setTaxNum}
             onContractChange={setContractData}
             onDateChange={setCurrentDate}
@@ -90,6 +93,7 @@ function App() {
       <Claim 
             buyerName={buyerName}
             taxNum={taxNum}
+            buyerAddress={buyerAddress}
             contractData={contractData} 
             date={currentDate}
             formType={formType}
